@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - PYTHON_RAG_SERVICE_URL=http://rag-service:5000
+    depends_on:
+      - rag-service
+    networks:
+      - pubmedchatbot-network
+
+  rag-service:
+    build:
+      context: ./rag-service
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PUBMED_EMAIL=${PUBMED_EMAIL}
+      - PORT=5000
+    networks:
+      - pubmedchatbot-network
+
+networks:
+  pubmedchatbot-network:
+    driver: bridge
