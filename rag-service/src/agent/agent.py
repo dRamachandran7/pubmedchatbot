@@ -1,5 +1,5 @@
 import logging
-from typing import List, Dict
+from typing import List, Dict, Optional
 from ..config.settings import settings
 from .tools import RAGTools
 from .retrieval_router import RetrievalRouterAgent
@@ -18,7 +18,7 @@ class RAGAgent:
         self.query_analyzer = QueryAnalyzerAgent()
         self.response_generator = ResponseGeneratorAgent()
     
-    def process_query(self, query: str, session_id: str = None) -> Dict:
+    def process_query(self, query: str, session_id: Optional[str] = None) -> Dict:
         """Process user query through agent pipeline"""
         logger.info(f"Processing query: {query}")
         

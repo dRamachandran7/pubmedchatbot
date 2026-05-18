@@ -26,15 +26,23 @@ class QueryAnalyzerAgent:
             }
         """
         prompt = f"{QUERY_ANALYZER_PROMPT}\nUser Query: {query}"
-
-        response = requests.post(
-            f"{self.ollama_url}/api/generate",
-            json = {
-                "model" : self.model,
-                "prompt" : prompt,
-                "stream" : False
+        try:
+            response = requests.post(
+                f"{self.ollama_url}/api/generate",
+                json = {
+                    "model" : self.model,
+                    "prompt" : prompt,
+                    "stream" : False
+                }
+            )
+        except Exception as e:
+            logger.error(f"Error calling LLM for query analysis: {e}")
+            return {
+                "query_type": "unknown",
+                "intent": "unknown",
+                "complexity": "unknown",
+                "entities": []
             }
-        )
 
         response_text = response.json()["response"]
         json_result = json.loads(response_text)

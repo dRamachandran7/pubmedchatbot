@@ -9,7 +9,11 @@ logging.basicConfig(level=settings.LOG_LEVEL)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="PubMed RAG Service")
-agent = RAGAgent()
+try:
+    agent = RAGAgent()
+except Exception as e:
+    logger.error(f"Failed to initialize RAGAgent: {e}")
+    agent = None  # Set to None to handle in chat endpoint
 
 class ChatRequest(BaseModel):
     query: str
@@ -24,6 +28,8 @@ class ChatResponse(BaseModel):
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """Handle chat requests"""
+    if agent is None:
+        raise HTTPException(status_code=503, detail="RAG agent failed to initialize")
     try:
         response = agent.process_query(request.query, request.sessionId)
         return ChatResponse(**response)
