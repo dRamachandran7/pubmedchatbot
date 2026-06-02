@@ -33,9 +33,10 @@ function ChatWindow() {
     setIsLoading(true)
 
     try {
-      console.log('📤 Sending to backend:', { query: userMessage, sessionId: 'default' })
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+      console.log('📤 Sending to backend:', { query: userMessage, sessionId: 'default', apiUrl })
       
-      const response = await fetch('http://localhost:4000/api/chat', {
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ function ChatWindow() {
       const errorMessage = {
         id: messages.length + 2,
         type: 'assistant',
-        text: `Error: ${error.message}. Make sure the backend is running on http://localhost:4000`,
+        text: `Error: ${error.message}. Make sure the backend is running.`,
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, errorMessage])
