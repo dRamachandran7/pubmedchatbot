@@ -14,7 +14,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY run.py .
 COPY src ./src
-COPY data ./data
+
+# Create data directory for vector storage
+RUN mkdir -p ./data/vectors
 
 EXPOSE 8000
 
