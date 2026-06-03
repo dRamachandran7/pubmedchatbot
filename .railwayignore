@@ -1,0 +1,41 @@
+# Development files
+node_modules/
+.git/
+.gitignore
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Environment files (Railway uses dashboard for secrets)
+.env
+.env.local
+.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Documentation
+README.md
+docs/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+logs/
