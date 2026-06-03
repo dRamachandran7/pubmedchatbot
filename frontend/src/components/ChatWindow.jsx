@@ -48,7 +48,9 @@ function ChatWindow() {
       })
 
       if (!response.ok) {
-        throw new Error(`Backend error: ${response.statusText}`)
+        const errorData = await response.text()
+        console.error('Backend response:', { status: response.status, statusText: response.statusText, body: errorData })
+        throw new Error(`Backend error: ${response.status} ${response.statusText}. Details: ${errorData}`)
       }
 
       const data = await response.json()
