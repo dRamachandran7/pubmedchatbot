@@ -49,7 +49,7 @@ class ResponseGeneratorAgent:
 
         try:
             response = self.llm_client.chat.completions.create(
-                model="mixtral-8x7b-32768",
+                model="llama-3.3-70b-versatile",
                 messages=[
                     {"role": "system", "content": "You are a biomedical research assistant. Answer questions based on the provided PubMed articles, being accurate and evidence-based."},
                     {"role": "user", "content": prompt}

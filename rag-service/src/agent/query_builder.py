@@ -51,7 +51,7 @@ class QueryBuilderAgent:
         try:
             logger.info(f"Building search query for: {user_prompt}")
             response = self.client.chat.completions.create(
-                model="mixtral-8x7b-32768",
+                model="llama-3.3-70b-versatile",
                 messages=[
                     {"role": "system", "content": "You are a biomedical search query optimizer. Analyze the user's question and respond with valid JSON containing optimized PubMed search queries."},
                     {"role": "user", "content": prompt}
