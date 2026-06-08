@@ -1,17 +1,28 @@
 import logging
 from typing import Dict
 import json
-import requests
+from groq import Groq
+from ..config.settings import settings
 from ..config.prompts import QUERY_ANALYZER_PROMPT
 
 logger = logging.getLogger(__name__)
 
 class QueryAnalyzerAgent:
     """Analyzes queries to determine type, intent, and complexity"""
-    #Change url as necessary, llama2 is cheap so good for this simple task
-    def __init__(self, model: str = "llama2", ollama_url: str = "http://localhost:11434" ):
-        self.model = model
-        self.ollama_url = ollama_url
+    
+    def __init__(self):
+        self.client = self._init_client()
+    
+    def _init_client(self):
+        """Initialize Groq client"""
+        try:
+            if not settings.GROQ_API_KEY:
+                logger.error("GROQ_API_KEY not set")
+                return None
+            return Groq(api_key=settings.GROQ_API_KEY)
+        except Exception as e:
+            logger.error(f"Failed to initialize Groq client: {e}")
+            return None
     
     def analyze(self, query: str) -> Dict:
         """
@@ -25,36 +36,37 @@ class QueryAnalyzerAgent:
                 "entities": list
             }
         """
+        if not self.client:
+            logger.error("Groq client not initialized")
+            return self._default_analysis()
+        
         prompt = f"{QUERY_ANALYZER_PROMPT}\nUser Query: {query}"
+        
         try:
-            response = requests.post(
-                f"{self.ollama_url}/api/generate",
-                json={
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False
-                },
-                timeout=60
+            response = self.client.chat.completions.create(
+                model="mixtral-8x7b-32768",
+                messages=[
+                    {"role": "system", "content": "You are a biomedical query analyzer. Analyze the query and respond with valid JSON."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.3,
+                max_tokens=300
             )
             
-            if response.status_code != 200:
-                logger.error(f"Ollama error: {response.status_code} - {response.text}")
-                return self._default_analysis()
-            
-            response_text = response.json().get("response", "")
-            logger.debug(f"Raw Ollama response: {response_text[:200]}")
+            response_text = response.choices[0].message.content
+            logger.debug(f"Groq response: {response_text[:200]}")
             
             # Try to parse as JSON
             try:
                 json_result = json.loads(response_text)
                 return json_result
             except json.JSONDecodeError as e:
-                logger.error(f"Failed to parse JSON from Ollama: {e}")
+                logger.error(f"Failed to parse JSON from Groq: {e}")
                 logger.error(f"Response text was: {response_text[:500]}")
                 return self._default_analysis()
                 
         except Exception as e:
-            logger.error(f"Error calling Ollama for query analysis: {e}")
+            logger.error(f"Error calling Groq for query analysis: {e}")
             return self._default_analysis()
     
     def _default_analysis(self) -> Dict:

@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Optional
 from ..config.settings import settings
-import requests
+from groq import Groq
 
 logger = logging.getLogger(__name__)
 
@@ -12,23 +12,21 @@ class ResponseGeneratorAgent:
         self.llm_client = self._init_llm()
 
     def _init_llm(self):
-        """Initialize Ollama client for local LLM inference.
-        OpenAI/GPT code is commented in generate() method for future use."""
+        """Initialize Groq client for LLM inference."""
         try:
-            # Test Ollama connection
-            response = requests.get("http://localhost:11434/api/tags", timeout=5)
-            if response.status_code == 200:
-                logger.info("Ollama client initialized successfully")
-                return "ollama"
-            return None
+            if not settings.GROQ_API_KEY:
+                logger.error("GROQ_API_KEY not set")
+                return None
+            client = Groq(api_key=settings.GROQ_API_KEY)
+            logger.info("Groq client initialized successfully")
+            return client
         except Exception as e:
-            logger.error(f"Failed to connect to Ollama: {e}")
+            logger.error(f"Failed to initialize Groq client: {e}")
             return None
     
     def generate(self, query: str, context: Optional[List[Dict]] = None) -> Dict:
         """
-        Generate a response using Ollama (local LLM).
-        OpenAI/GPT code is commented out below for future use when credits are added.
+        Generate a response using Groq.
         
         Returns:
             {
@@ -50,41 +48,21 @@ class ResponseGeneratorAgent:
         prompt = self._build_prompt(query, context)
 
         try:
-            # --- USING OLLAMA FOR RESPONSE GENERATION ---
-            if self.llm_client == "ollama":
-                response = requests.post(
-                    "http://localhost:11434/api/generate",
-                    json={
-                        "model": "llama2",
-                        "prompt": prompt,
-                        "stream": False
-                    },
-                    timeout=120  # Increased timeout for longer responses
-                )
-                if response.status_code == 200:
-                    message = response.json().get("response", "").strip()
-                    return {
-                        "message": message if message else "Unable to generate a response",
-                        "sources_used": sources_used,
-                        "confidence": 0.85
-                    }
-            
-            # --- OPENAI/GPT CODE (COMMENTED OUT FOR FUTURE USE) ---
-            # response = self.llm_client.chat.completions.create(
-            #     model="gpt-4",
-            #     messages=[
-            #         {"role": "system", "content": "You are a biomedical research assistant. Answer questions based on the provided PubMed articles, being accurate and evidence-based."},
-            #         {"role": "user", "content": prompt}
-            #     ],
-            #     temperature=0.6,
-            #     max_tokens=500
-            # )
-            # message = (response.choices[0].message.content or "").strip()
-            # return {
-            #     "message": message if message else "Unable to generate a response",
-            #     "sources_used": sources_used,
-            #     "confidence": 0.9
-            # }
+            response = self.llm_client.chat.completions.create(
+                model="mixtral-8x7b-32768",
+                messages=[
+                    {"role": "system", "content": "You are a biomedical research assistant. Answer questions based on the provided PubMed articles, being accurate and evidence-based."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.6,
+                max_tokens=500
+            )
+            message = (response.choices[0].message.content or "").strip()
+            return {
+                "message": message if message else "Unable to generate a response",
+                "sources_used": sources_used,
+                "confidence": 0.9
+            }
             
         except Exception as e:
             logger.error(f"Error generating response: {e}")

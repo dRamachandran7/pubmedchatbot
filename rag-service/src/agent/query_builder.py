@@ -1,7 +1,8 @@
 import logging
 from typing import Dict, List, Any
 import json
-import requests
+from groq import Groq
+from ..config.settings import settings
 from ..config.prompts import QUERY_BUILDER_PROMPT
 
 logger = logging.getLogger(__name__)
@@ -10,9 +11,19 @@ logger = logging.getLogger(__name__)
 class QueryBuilderAgent:
     """Transforms natural language queries into optimized PubMed search queries"""
     
-    def __init__(self, model: str = "llama2", ollama_url: str = "http://localhost:11434"):
-        self.model = model
-        self.ollama_url = ollama_url
+    def __init__(self):
+        self.client = self._init_client()
+    
+    def _init_client(self):
+        """Initialize Groq client"""
+        try:
+            if not settings.GROQ_API_KEY:
+                logger.error("GROQ_API_KEY not set")
+                return None
+            return Groq(api_key=settings.GROQ_API_KEY)
+        except Exception as e:
+            logger.error(f"Failed to initialize Groq client: {e}")
+            return None
     
     def build_query(self, user_prompt: str) -> Dict[str, Any]:
         """
@@ -31,26 +42,26 @@ class QueryBuilderAgent:
                 "error": str or None  # Error message if failed
             }
         """
+        if not self.client:
+            logger.error("Groq client not initialized")
+            return self._default_response(user_prompt)
+        
         prompt = f"{QUERY_BUILDER_PROMPT}\nUser Question: {user_prompt}"
         
         try:
             logger.info(f"Building search query for: {user_prompt}")
-            response = requests.post(
-                f"{self.ollama_url}/api/generate",
-                json={
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False
-                },
-                timeout=60
+            response = self.client.chat.completions.create(
+                model="mixtral-8x7b-32768",
+                messages=[
+                    {"role": "system", "content": "You are a biomedical search query optimizer. Analyze the user's question and respond with valid JSON containing optimized PubMed search queries."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.3,
+                max_tokens=500
             )
             
-            if response.status_code != 200:
-                logger.error(f"Ollama error: {response.status_code} - {response.text}")
-                return self._default_response(user_prompt)
-            
-            response_text = response.json().get("response", "")
-            logger.debug(f"Raw Ollama response: {response_text[:300]}")
+            response_text = response.choices[0].message.content
+            logger.debug(f"Groq response: {response_text[:300]}")
             
             # Try to parse as JSON
             try:
@@ -75,11 +86,8 @@ class QueryBuilderAgent:
                     logger.warning(f"Failed to extract JSON: {inner_e}")
                 return self._default_response(user_prompt)
                     
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Request error: {e}")
-            return self._default_response(user_prompt)
         except Exception as e:
-            logger.error(f"Unexpected error in build_query: {e}")
+            logger.error(f"Error calling Groq: {e}")
             return self._default_response(user_prompt)
     
     def _default_response(self, user_prompt: str) -> Dict[str, Any]:
