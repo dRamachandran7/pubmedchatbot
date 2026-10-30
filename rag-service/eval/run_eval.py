@@ -8,7 +8,9 @@ chunking differs):
                    (reference point: maximum context, no chunking)
   fixed_size       512-char windows with 50-char overlap
   section          section-based chunking via DocumentProcessor (current)
-plus `section_chroma`, the production VectorStore (Chroma HNSW) end to end.
+  *+<reranker>     the same, with the top RERANK_CANDIDATES chunks reordered
+                   by a cross-encoder before grouping into articles
+plus `section_chroma*`, the production VectorStore (Chroma HNSW) end to end.
 
 Metrics, over questions labelled with a gold PMID and verbatim evidence:
   hit@1, hit@3     gold article ranked first / in the top 3
@@ -16,6 +18,7 @@ Metrics, over questions labelled with a gold PMID and verbatim evidence:
   ctx_hit@3        gold article in the top 3 AND the text handed to the LLM
                    for it contains the evidence -- i.e. the answer reached the LLM
   ctx_words        mean words of context sent to the LLM per query (top 3)
+  ms/query         mean search latency (includes reranking; machine-dependent)
 
 Usage (from rag-service/):  python -m eval.run_eval
 """
@@ -23,16 +26,22 @@ import json
 import os
 import re
 import tempfile
+import time
 from typing import Callable, Dict, List
 
 import numpy as np
 
-from src.retrieval.document_processor import DocumentProcessor
+from src.retrieval.reranker import Reranker
 from src.retrieval.vector_store import VectorStore
 
 EVAL_DIR = os.path.dirname(__file__)
 TOP_K = 10
 CHUNKS_PER_ARTICLE = 2  # matches VectorStore.search default
+RERANK_CANDIDATES = 50  # matches VectorStore default
+RERANKERS = {
+    "minilm": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "medcpt": "ncbi/MedCPT-Cross-Encoder",
+}
 
 
 def normalize(text: str) -> str:
@@ -70,11 +79,15 @@ class ExactIndex:
             [c["embed_text"] for c in self.chunks], normalize_embeddings=True,
             convert_to_numpy=True, batch_size=64)
 
-    def search(self, query: str, k: int) -> List[Dict]:
+    def search(self, query: str, k: int, reranker: Reranker = None) -> List[Dict]:
         q = self.model.encode(query, normalize_embeddings=True, convert_to_numpy=True)
         # macOS Accelerate emits spurious matmul overflow warnings; scores are finite
         with np.errstate(all="ignore"):
-            order = np.argsort(-(self.embeddings @ q))
+            order = list(np.argsort(-(self.embeddings @ q)))
+        if reranker:
+            candidates = order[:RERANK_CANDIDATES]
+            scores = reranker.score(query, [self.chunks[i]["embed_text"] for i in candidates])
+            order = [i for _, i in sorted(zip(scores, candidates), key=lambda p: -p[0])]
         by_pmid: Dict[str, Dict] = {}
         for idx in order:
             chunk = self.chunks[idx]
@@ -96,8 +109,11 @@ class ExactIndex:
 def score(name: str, questions: List[Dict], search: Callable[[str], List[Dict]],
           context_of: Callable[[Dict], str]) -> Dict:
     rows = []
+    elapsed = 0.0
     for q in questions:
+        start = time.perf_counter()
         results = search(q["question"])
+        elapsed += time.perf_counter() - start
         ranked = [r["pmid"] for r in results]
         rank = ranked.index(q["pmid"]) + 1 if q["pmid"] in ranked else None
         top3 = results[:3]
@@ -116,6 +132,7 @@ def score(name: str, questions: List[Dict], search: Callable[[str], List[Dict]],
         "mrr@10": sum(1 / r["rank"] for r in rows if r["rank"]) / n,
         "ctx_hit@3": sum(r["ctx_hit"] for r in rows) / n,
         "ctx_words": sum(r["ctx_words"] for r in rows) / n,
+        "ms_per_query": 1000 * elapsed / n,
         "per_question": rows,
     }
 
@@ -134,6 +151,7 @@ def main():
             f"{q['id']}: evidence not found in abstract of {q['pmid']}"
 
     with tempfile.TemporaryDirectory() as db_path:
+        rerankers = {name: Reranker(model) for name, model in RERANKERS.items()}
         store = VectorStore(db_path=db_path)
         model, processor = store.embeddings_model, store.processor
         print(f"Corpus: {len(corpus)} articles, {len(questions)} questions\n")
@@ -155,16 +173,28 @@ def main():
             score("section_chroma", questions, lambda q: store.search(q, k=TOP_K),
                   lambda r: r["abstract"]),
         ]
+        for name, reranker in rerankers.items():
+            results += [
+                score(f"fixed_size+{name}", questions,
+                      lambda q: fixed.search(q, TOP_K, reranker), lambda r: r["context"]),
+                score(f"section+{name}", questions,
+                      lambda q: section.search(q, TOP_K, reranker), lambda r: r["context"]),
+            ]
+        # Production path with each reranker plugged into the real VectorStore
+        for name, reranker in rerankers.items():
+            store.reranker = reranker
+            results.append(score(f"section_chroma+{name}", questions,
+                                 lambda q: store.search(q, k=TOP_K), lambda r: r["abstract"]))
 
     chunk_counts = {"whole_doc": len(whole.chunks), "fixed_size": len(fixed.chunks),
                     "section": len(section.chunks)}
     print(f"Chunks indexed: {chunk_counts}\n")
-    header = f"{'strategy':<16}{'hit@1':>8}{'hit@3':>8}{'mrr@10':>8}{'ctx_hit@3':>11}{'ctx_words':>11}"
+    header = f"{'strategy':<24}{'hit@1':>8}{'hit@3':>8}{'mrr@10':>8}{'ctx_hit@3':>11}{'ctx_words':>11}{'ms/query':>10}"
     print(header)
     print("-" * len(header))
     for r in results:
-        print(f"{r['strategy']:<16}{r['hit@1']:>8.2f}{r['hit@3']:>8.2f}{r['mrr@10']:>8.2f}"
-              f"{r['ctx_hit@3']:>11.2f}{r['ctx_words']:>11.0f}")
+        print(f"{r['strategy']:<24}{r['hit@1']:>8.2f}{r['hit@3']:>8.2f}{r['mrr@10']:>8.2f}"
+              f"{r['ctx_hit@3']:>11.2f}{r['ctx_words']:>11.0f}{r['ms_per_query']:>10.0f}")
 
     out_path = os.path.join(EVAL_DIR, "results.json")
     with open(out_path, "w") as f:

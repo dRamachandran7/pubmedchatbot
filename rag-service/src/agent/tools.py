@@ -2,14 +2,23 @@ import logging
 from typing import List, Dict
 from .pubmed_retriever import PubMedRetriever
 from ..retrieval.vector_store import VectorStore
+from ..retrieval.reranker import Reranker
+from ..config.settings import settings
 
 logger = logging.getLogger(__name__)
 
 class RAGTools:
     def __init__(self, pubmed_email: str):
         self.pubmed = PubMedRetriever(pubmed_email)
+        reranker = None
+        if settings.RERANKER_MODEL:
+            try:
+                reranker = Reranker(settings.RERANKER_MODEL)
+            except Exception as e:
+                # Search still works without reranking, just less precisely
+                logger.error(f"Failed to load reranker, continuing without it: {e}")
         try:
-            self.vector_store = VectorStore()
+            self.vector_store = VectorStore(reranker=reranker)
         except Exception as e:
             logger.error(f"Failed to initialize vector store: {e}")
             self.vector_store = None

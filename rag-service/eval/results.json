@@ -12,6 +12,7 @@
    "mrr@10": 0.8807142857142857,
    "ctx_hit@3": 0.0,
    "ctx_words": 118.02857142857142,
+   "ms_per_query": 22.890411885714457,
    "per_question": [
     {
      "id": "q01",
@@ -232,6 +233,7 @@
    "mrr@10": 0.8807142857142857,
    "ctx_hit@3": 0.9428571428571428,
    "ctx_words": 766.4,
+   "ms_per_query": 8.26516188571428,
    "per_question": [
     {
      "id": "q01",
@@ -452,6 +454,7 @@
    "mrr@10": 0.9119047619047619,
    "ctx_hit@3": 0.6,
    "ctx_words": 383.74285714285713,
+   "ms_per_query": 9.115966685714179,
    "per_question": [
     {
      "id": "q01",
@@ -672,6 +675,7 @@
    "mrr@10": 0.8993197278911564,
    "ctx_hit@3": 0.8,
    "ctx_words": 430.62857142857143,
+   "ms_per_query": 7.495934457142539,
    "per_question": [
     {
      "id": "q01",
@@ -892,6 +896,7 @@
    "mrr@10": 0.8993197278911564,
    "ctx_hit@3": 0.8,
    "ctx_words": 428.74285714285713,
+   "ms_per_query": 10.651990399999837,
    "per_question": [
     {
      "id": "q01",
@@ -1102,6 +1107,1332 @@
      "rank": 1,
      "ctx_hit": true,
      "ctx_words": 458
+    }
+   ]
+  },
+  {
+   "strategy": "fixed_size+minilm",
+   "hit@1": 0.8,
+   "hit@3": 0.9714285714285714,
+   "mrr@10": 0.8809523809523809,
+   "ctx_hit@3": 0.7428571428571429,
+   "ctx_words": 374.14285714285717,
+   "ms_per_query": 393.40709877142785,
+   "per_question": [
+    {
+     "id": "q01",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 341
+    },
+    {
+     "id": "q02",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 403
+    },
+    {
+     "id": "q03",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 322
+    },
+    {
+     "id": "q04",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 396
+    },
+    {
+     "id": "q05",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 394
+    },
+    {
+     "id": "q06",
+     "rank": 3,
+     "ctx_hit": false,
+     "ctx_words": 394
+    },
+    {
+     "id": "q07",
+     "rank": 3,
+     "ctx_hit": false,
+     "ctx_words": 321
+    },
+    {
+     "id": "q08",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 415
+    },
+    {
+     "id": "q09",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 383
+    },
+    {
+     "id": "q10",
+     "rank": 6,
+     "ctx_hit": false,
+     "ctx_words": 330
+    },
+    {
+     "id": "q11",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 276
+    },
+    {
+     "id": "q12",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 370
+    },
+    {
+     "id": "q13",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 430
+    },
+    {
+     "id": "q14",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 396
+    },
+    {
+     "id": "q15",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 382
+    },
+    {
+     "id": "q16",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 365
+    },
+    {
+     "id": "q17",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 413
+    },
+    {
+     "id": "q18",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 339
+    },
+    {
+     "id": "q19",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 374
+    },
+    {
+     "id": "q20",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 326
+    },
+    {
+     "id": "q21",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 371
+    },
+    {
+     "id": "q22",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 297
+    },
+    {
+     "id": "q23",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 401
+    },
+    {
+     "id": "q24",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 461
+    },
+    {
+     "id": "q25",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 298
+    },
+    {
+     "id": "q26",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 418
+    },
+    {
+     "id": "q27",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 400
+    },
+    {
+     "id": "q28",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 409
+    },
+    {
+     "id": "q29",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 339
+    },
+    {
+     "id": "q30",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 369
+    },
+    {
+     "id": "q31",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 368
+    },
+    {
+     "id": "q32",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 381
+    },
+    {
+     "id": "q33",
+     "rank": 2,
+     "ctx_hit": false,
+     "ctx_words": 368
+    },
+    {
+     "id": "q34",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 407
+    },
+    {
+     "id": "q35",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 438
+    }
+   ]
+  },
+  {
+   "strategy": "section+minilm",
+   "hit@1": 0.8857142857142857,
+   "hit@3": 1.0,
+   "mrr@10": 0.9428571428571428,
+   "ctx_hit@3": 0.8571428571428571,
+   "ctx_words": 464.9142857142857,
+   "ms_per_query": 362.8914321714291,
+   "per_question": [
+    {
+     "id": "q01",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 402
+    },
+    {
+     "id": "q02",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 340
+    },
+    {
+     "id": "q03",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 435
+    },
+    {
+     "id": "q04",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 334
+    },
+    {
+     "id": "q05",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 461
+    },
+    {
+     "id": "q06",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 374
+    },
+    {
+     "id": "q07",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 323
+    },
+    {
+     "id": "q08",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 469
+    },
+    {
+     "id": "q09",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 509
+    },
+    {
+     "id": "q10",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 428
+    },
+    {
+     "id": "q11",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 601
+    },
+    {
+     "id": "q12",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 356
+    },
+    {
+     "id": "q13",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 478
+    },
+    {
+     "id": "q14",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 551
+    },
+    {
+     "id": "q15",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 630
+    },
+    {
+     "id": "q16",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 481
+    },
+    {
+     "id": "q17",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 362
+    },
+    {
+     "id": "q18",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 318
+    },
+    {
+     "id": "q19",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 341
+    },
+    {
+     "id": "q20",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 456
+    },
+    {
+     "id": "q21",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 406
+    },
+    {
+     "id": "q22",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 652
+    },
+    {
+     "id": "q23",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 476
+    },
+    {
+     "id": "q24",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 476
+    },
+    {
+     "id": "q25",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 495
+    },
+    {
+     "id": "q26",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 539
+    },
+    {
+     "id": "q27",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 501
+    },
+    {
+     "id": "q28",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 583
+    },
+    {
+     "id": "q29",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 596
+    },
+    {
+     "id": "q30",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 471
+    },
+    {
+     "id": "q31",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 444
+    },
+    {
+     "id": "q32",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 409
+    },
+    {
+     "id": "q33",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 600
+    },
+    {
+     "id": "q34",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 517
+    },
+    {
+     "id": "q35",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 458
+    }
+   ]
+  },
+  {
+   "strategy": "fixed_size+medcpt",
+   "hit@1": 0.9142857142857143,
+   "hit@3": 1.0,
+   "mrr@10": 0.9476190476190476,
+   "ctx_hit@3": 0.7142857142857143,
+   "ctx_words": 348.0857142857143,
+   "ms_per_query": 969.5442012000002,
+   "per_question": [
+    {
+     "id": "q01",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 209
+    },
+    {
+     "id": "q02",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 279
+    },
+    {
+     "id": "q03",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 348
+    },
+    {
+     "id": "q04",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 421
+    },
+    {
+     "id": "q05",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 334
+    },
+    {
+     "id": "q06",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 363
+    },
+    {
+     "id": "q07",
+     "rank": 3,
+     "ctx_hit": true,
+     "ctx_words": 331
+    },
+    {
+     "id": "q08",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 330
+    },
+    {
+     "id": "q09",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 298
+    },
+    {
+     "id": "q10",
+     "rank": 3,
+     "ctx_hit": true,
+     "ctx_words": 388
+    },
+    {
+     "id": "q11",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 354
+    },
+    {
+     "id": "q12",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 358
+    },
+    {
+     "id": "q13",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 345
+    },
+    {
+     "id": "q14",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 398
+    },
+    {
+     "id": "q15",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 383
+    },
+    {
+     "id": "q16",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 329
+    },
+    {
+     "id": "q17",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 339
+    },
+    {
+     "id": "q18",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 376
+    },
+    {
+     "id": "q19",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 389
+    },
+    {
+     "id": "q20",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 326
+    },
+    {
+     "id": "q21",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 358
+    },
+    {
+     "id": "q22",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 326
+    },
+    {
+     "id": "q23",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 344
+    },
+    {
+     "id": "q24",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 390
+    },
+    {
+     "id": "q25",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 304
+    },
+    {
+     "id": "q26",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 295
+    },
+    {
+     "id": "q27",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 358
+    },
+    {
+     "id": "q28",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 318
+    },
+    {
+     "id": "q29",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 339
+    },
+    {
+     "id": "q30",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 373
+    },
+    {
+     "id": "q31",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 341
+    },
+    {
+     "id": "q32",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 411
+    },
+    {
+     "id": "q33",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 366
+    },
+    {
+     "id": "q34",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 325
+    },
+    {
+     "id": "q35",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 437
+    }
+   ]
+  },
+  {
+   "strategy": "section+medcpt",
+   "hit@1": 0.9142857142857143,
+   "hit@3": 1.0,
+   "mrr@10": 0.9571428571428572,
+   "ctx_hit@3": 0.8571428571428571,
+   "ctx_words": 439.34285714285716,
+   "ms_per_query": 1338.4907308571417,
+   "per_question": [
+    {
+     "id": "q01",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 373
+    },
+    {
+     "id": "q02",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 402
+    },
+    {
+     "id": "q03",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 399
+    },
+    {
+     "id": "q04",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 354
+    },
+    {
+     "id": "q05",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 269
+    },
+    {
+     "id": "q06",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 310
+    },
+    {
+     "id": "q07",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 319
+    },
+    {
+     "id": "q08",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 403
+    },
+    {
+     "id": "q09",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 372
+    },
+    {
+     "id": "q10",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 449
+    },
+    {
+     "id": "q11",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 652
+    },
+    {
+     "id": "q12",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 409
+    },
+    {
+     "id": "q13",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 544
+    },
+    {
+     "id": "q14",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 507
+    },
+    {
+     "id": "q15",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 480
+    },
+    {
+     "id": "q16",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 469
+    },
+    {
+     "id": "q17",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 419
+    },
+    {
+     "id": "q18",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 485
+    },
+    {
+     "id": "q19",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 341
+    },
+    {
+     "id": "q20",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 409
+    },
+    {
+     "id": "q21",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 369
+    },
+    {
+     "id": "q22",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 675
+    },
+    {
+     "id": "q23",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 339
+    },
+    {
+     "id": "q24",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 548
+    },
+    {
+     "id": "q25",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 439
+    },
+    {
+     "id": "q26",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 525
+    },
+    {
+     "id": "q27",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 560
+    },
+    {
+     "id": "q28",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 527
+    },
+    {
+     "id": "q29",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 361
+    },
+    {
+     "id": "q30",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 417
+    },
+    {
+     "id": "q31",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 498
+    },
+    {
+     "id": "q32",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 415
+    },
+    {
+     "id": "q33",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 587
+    },
+    {
+     "id": "q34",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 355
+    },
+    {
+     "id": "q35",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 397
+    }
+   ]
+  },
+  {
+   "strategy": "section_chroma+minilm",
+   "hit@1": 0.8857142857142857,
+   "hit@3": 1.0,
+   "mrr@10": 0.9428571428571428,
+   "ctx_hit@3": 0.8571428571428571,
+   "ctx_words": 464.9142857142857,
+   "ms_per_query": 258.1068023999998,
+   "per_question": [
+    {
+     "id": "q01",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 402
+    },
+    {
+     "id": "q02",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 340
+    },
+    {
+     "id": "q03",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 435
+    },
+    {
+     "id": "q04",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 334
+    },
+    {
+     "id": "q05",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 461
+    },
+    {
+     "id": "q06",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 374
+    },
+    {
+     "id": "q07",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 323
+    },
+    {
+     "id": "q08",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 469
+    },
+    {
+     "id": "q09",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 509
+    },
+    {
+     "id": "q10",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 428
+    },
+    {
+     "id": "q11",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 601
+    },
+    {
+     "id": "q12",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 356
+    },
+    {
+     "id": "q13",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 478
+    },
+    {
+     "id": "q14",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 551
+    },
+    {
+     "id": "q15",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 630
+    },
+    {
+     "id": "q16",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 481
+    },
+    {
+     "id": "q17",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 362
+    },
+    {
+     "id": "q18",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 318
+    },
+    {
+     "id": "q19",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 341
+    },
+    {
+     "id": "q20",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 456
+    },
+    {
+     "id": "q21",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 406
+    },
+    {
+     "id": "q22",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 652
+    },
+    {
+     "id": "q23",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 476
+    },
+    {
+     "id": "q24",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 476
+    },
+    {
+     "id": "q25",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 495
+    },
+    {
+     "id": "q26",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 539
+    },
+    {
+     "id": "q27",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 501
+    },
+    {
+     "id": "q28",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 583
+    },
+    {
+     "id": "q29",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 596
+    },
+    {
+     "id": "q30",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 471
+    },
+    {
+     "id": "q31",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 444
+    },
+    {
+     "id": "q32",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 409
+    },
+    {
+     "id": "q33",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 600
+    },
+    {
+     "id": "q34",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 517
+    },
+    {
+     "id": "q35",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 458
+    }
+   ]
+  },
+  {
+   "strategy": "section_chroma+medcpt",
+   "hit@1": 0.9142857142857143,
+   "hit@3": 1.0,
+   "mrr@10": 0.9571428571428572,
+   "ctx_hit@3": 0.8571428571428571,
+   "ctx_words": 439.34285714285716,
+   "ms_per_query": 1282.3922143428586,
+   "per_question": [
+    {
+     "id": "q01",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 373
+    },
+    {
+     "id": "q02",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 402
+    },
+    {
+     "id": "q03",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 399
+    },
+    {
+     "id": "q04",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 354
+    },
+    {
+     "id": "q05",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 269
+    },
+    {
+     "id": "q06",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 310
+    },
+    {
+     "id": "q07",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 319
+    },
+    {
+     "id": "q08",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 403
+    },
+    {
+     "id": "q09",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 372
+    },
+    {
+     "id": "q10",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 449
+    },
+    {
+     "id": "q11",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 652
+    },
+    {
+     "id": "q12",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 409
+    },
+    {
+     "id": "q13",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 544
+    },
+    {
+     "id": "q14",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 507
+    },
+    {
+     "id": "q15",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 480
+    },
+    {
+     "id": "q16",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 469
+    },
+    {
+     "id": "q17",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 419
+    },
+    {
+     "id": "q18",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 485
+    },
+    {
+     "id": "q19",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 341
+    },
+    {
+     "id": "q20",
+     "rank": 2,
+     "ctx_hit": true,
+     "ctx_words": 409
+    },
+    {
+     "id": "q21",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 369
+    },
+    {
+     "id": "q22",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 675
+    },
+    {
+     "id": "q23",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 339
+    },
+    {
+     "id": "q24",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 548
+    },
+    {
+     "id": "q25",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 439
+    },
+    {
+     "id": "q26",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 525
+    },
+    {
+     "id": "q27",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 560
+    },
+    {
+     "id": "q28",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 527
+    },
+    {
+     "id": "q29",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 361
+    },
+    {
+     "id": "q30",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 417
+    },
+    {
+     "id": "q31",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 498
+    },
+    {
+     "id": "q32",
+     "rank": 1,
+     "ctx_hit": false,
+     "ctx_words": 415
+    },
+    {
+     "id": "q33",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 587
+    },
+    {
+     "id": "q34",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 355
+    },
+    {
+     "id": "q35",
+     "rank": 1,
+     "ctx_hit": true,
+     "ctx_words": 397
     }
    ]
   }

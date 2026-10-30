@@ -1,14 +1,22 @@
 import logging
-from typing import List, Dict
+from typing import List, Dict, Optional
 from sentence_transformers import SentenceTransformer
 import chromadb
 from .document_processor import DocumentProcessor
+from .reranker import Reranker
 
 logger = logging.getLogger(__name__)
 
 class VectorStore:
-    def __init__(self, embeddings_model: str = "all-MiniLM-L6-v2", db_path: str = "./data/chroma"):
-        """Initialize vector store with embeddings model and Chroma DB"""
+    def __init__(self, embeddings_model: str = "all-MiniLM-L6-v2", db_path: str = "./data/chroma",
+                 reranker: Optional[Reranker] = None, rerank_candidates: int = 50):
+        """Initialize vector store with embeddings model and Chroma DB.
+
+        With a reranker, search pulls rerank_candidates chunks by vector
+        similarity and reorders them with the cross-encoder before grouping.
+        """
+        self.reranker = reranker
+        self.rerank_candidates = rerank_candidates
         try:
             # Load embeddings model
             self.embeddings_model = SentenceTransformer(embeddings_model)
@@ -82,30 +90,51 @@ class VectorStore:
             # Generate query embedding
             query_embedding = self.embeddings_model.encode(query, convert_to_numpy=True)
             
-            # Over-fetch chunks, since several may belong to the same article
+            # Over-fetch chunks, since several may belong to the same article;
+            # fetch a wider candidate pool when a reranker will reorder them
+            n_results = max(k * 4, self.rerank_candidates) if self.reranker else k * 4
             results = self.collection.query(
                 query_embeddings=[query_embedding.tolist()],
-                n_results=k * 4
+                n_results=min(n_results, max(self.collection.count(), 1))
             )
-            
+
             articles: List[Dict] = []
             if not results:
                 return articles
-            
+
             metadatas_raw = results.get("metadatas")
             metadatas = metadatas_raw[0] if metadatas_raw and len(metadatas_raw) > 0 else []
-            
+
+            documents_raw = results.get("documents")
+            documents = documents_raw[0] if documents_raw and len(documents_raw) > 0 else []
+
             distances_raw = results.get("distances")
             distances = distances_raw[0] if distances_raw and len(distances_raw) > 0 else []
-            
-            # Results come back nearest-first, so the first hit per PMID is its best
-            by_pmid: Dict[str, Dict] = {}
+
+            hits = []
             for i, metadata in enumerate(metadatas):
                 if not isinstance(metadata, dict):
                     continue
+                hits.append({
+                    "metadata": metadata,
+                    "document": documents[i] if i < len(documents) else "",
+                    # Chroma returns cosine distance; convert to similarity
+                    "similarity": 1.0 - float(distances[i]) if i < len(distances) else 0.0,
+                    "rerank_score": None
+                })
+
+            # Rerank on the embedded text (title + section + chunk) for context
+            if self.reranker and hits:
+                scores = self.reranker.score(query, [h["document"] for h in hits])
+                for hit, s in zip(hits, scores):
+                    hit["rerank_score"] = s
+                hits.sort(key=lambda h: h["rerank_score"], reverse=True)
+
+            # Hits are best-first, so the first hit per PMID is its best
+            by_pmid: Dict[str, Dict] = {}
+            for hit in hits:
+                metadata, similarity = hit["metadata"], hit["similarity"]
                 pmid = metadata.get("pmid", "")
-                # Chroma returns cosine distance; convert to similarity
-                similarity = 1.0 - float(distances[i]) if i < len(distances) else 0.0
                 if pmid not in by_pmid:
                     if len(by_pmid) >= k:
                         continue
@@ -114,6 +143,7 @@ class VectorStore:
                         "title": metadata.get("title", ""),
                         "journal": metadata.get("journal", ""),
                         "similarity_score": similarity,
+                        "rerank_score": hit["rerank_score"],
                         "chunks": []
                     }
                 article = by_pmid[pmid]
