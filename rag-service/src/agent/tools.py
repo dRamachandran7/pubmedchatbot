@@ -49,13 +49,15 @@ class RAGTools:
             pmids = self.pubmed.search(query, max_results=k)
             articles = self.pubmed.fetch_details(pmids)
         
-        # Simplify for LLM context
+        # Simplify for LLM context: vector hits carry their matched chunks,
+        # which are already size-bounded; PubMed fallback abstracts are truncated
         try:
             return [
                 {
                     "pmid": article.get("pmid", ""),
                     "title": article.get("title", ""),
-                    "summary": article.get("abstract", "")[:300]  # Truncated abstract
+                    "summary": article.get("abstract", "") if article.get("chunks")
+                    else article.get("abstract", "")[:300]
                 }
                 for article in articles
             ]
